@@ -2,6 +2,7 @@
 
 const wrapper = document.querySelector(".wrapper"),
 	searchInput = wrapper.querySelector("input"),
+	synonyms = wrapper.querySelector(".synonyms .list"),
 	infoText = wrapper.querySelector(".info-text");
 
 // data function
@@ -12,13 +13,26 @@ function data(result, word) {
 		console.log(result);
 		wrapper.classList.add("active");
 		let definitions = result[0].meanings[0].definitions[0],
-		phonetics = `${result[0].meanings[0].partOfSpeech} /${result[0].phonetics[0].text}/`;
+			phonetics = `${result[0].meanings[0].partOfSpeech} /${result[0].phonetics[0].text}/`;
 
 		//let's pass the particular response data to a particular html element
 		document.querySelector(".word p").innerText = result[0].word;
 		document.querySelector(".word span").innerText = phonetics;
 		document.querySelector(".meaning span").innerText = definitions.definition;
 		document.querySelector(".example span").innerText = definitions.example;
+
+		// if there is no synonyms then hide the synonyms div
+		if (definitions.synonyms[0] == undefined) {
+			synonyms.parentElement.style.display = "none";
+		} else {
+			synonyms.parentElement.style.display = "block";
+			synonyms.innerHTML = "";
+			for (let i = 0; i < 6; i++) { //getting only the first 6 synonyms out of many
+				let tag = `<span>${definitions.synonyms[i]},</span>`;
+				//passing all 6 synonyms inside synonyms div
+				synonyms.insertAdjacentHTML("beforeend", tag);
+			}
+		}
 	}
 }
 
