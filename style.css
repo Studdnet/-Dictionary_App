@@ -79,6 +79,10 @@ body {
 	display: block;
 }
 
+.wrapper.active .info-text {
+	display: none;
+}
+
 .wrapper .info-text {
 	font-size: 13px;
 	color: #9a9a9a;
@@ -90,7 +94,15 @@ body {
 }
 
 .wrapper ul {
-	display: none;
+	height: 0;
+	opacity: 0;
+	overflow: hidden;
+	transition: all 0.3s ease 0s;
+}
+
+.wrapper.active ul{
+	height: 303px;
+	opacity: 1;
 }
 
 .wrapper ul li{
@@ -122,6 +134,15 @@ ul .word i {
 	cursor: pointer;
 	font-size: 15px;
 	color: #999;
+}
+
+ul .content {
+	max-height: 215px;
+	overflow-y: auto;
+}
+
+ul .content::-webkit-scrollbar {
+	width: 0;
 }
 
 ul .content li .details{
