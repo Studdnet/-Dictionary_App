@@ -4,7 +4,7 @@ const wrapper = document.querySelector(".wrapper"),
 	searchInput = wrapper.querySelector("input"),
 	synonyms = wrapper.querySelector(".synonyms .list"),
 	infoText = wrapper.querySelector(".info-text"),
-	volumeIcon = wrapper.querySelector(".word i"),
+	volumeIcon = wrapper.querySelector("ul .word i"),
 	removeIcon = wrapper.querySelector(".search span");
 	let audio;
 
@@ -13,7 +13,6 @@ function data(result, word) {
 	if (result.title) { //if api returns the message of can`t find the word
 		infoText.innerHTML = `Can't find the meaning of <span>"${word}"</span>. Please, try to search for another word.`;
 	} else {
-		console.log(result);
 		wrapper.classList.add("active");
 		let definitions = result[0].meanings[0].definitions[0],
 			phonetics = `${result[0].meanings[0].partOfSpeech} /${result[0].phonetics[0].text}/`;
@@ -67,12 +66,17 @@ searchInput.addEventListener("keydown", (e) => {
 });
 
 volumeIcon.addEventListener("click", ()=>{
+	volumeIcon.style.color = "#4D59FB";
 	audio.play();
+	setTimeout(()=>{
+		volumeIcon.style.color = "#999";
+	},800);
 });
 
 removeIcon.addEventListener("click", ()=>{
 	searchInput.value = "";
 	searchInput.focus();
 	wrapper.classList.remove("active");
+	infoText.style.color = "#9a9a9a";
 	infoText.innerHTML = `Type a word and press enter to get meaning, example, pronunciation and synonyms of that typed`;
 });
