@@ -4,7 +4,8 @@ const wrapper = document.querySelector(".wrapper"),
 	searchInput = wrapper.querySelector("input"),
 	synonyms = wrapper.querySelector(".synonyms .list"),
 	infoText = wrapper.querySelector(".info-text"),
-	volumeIcon = wrapper.querySelector(".word i");
+	volumeIcon = wrapper.querySelector(".word i"),
+	removeIcon = wrapper.querySelector(".word i");
 	let audio;
 
 // data function
@@ -31,14 +32,21 @@ function data(result, word) {
 		} else {
 			synonyms.parentElement.style.display = "block";
 			synonyms.innerHTML = "";
-			for (let i = 0; i < 6; i++) { //getting only the first 6 synonyms out of many
-				let tag = `<span>${definitions.synonyms[i]},</span>`;
-				//passing all 6 synonyms inside synonyms div
+			for (let i = 0; i < 5; i++) { //getting only the first 6 synonyms out of many
+				let tag = `<span onclick=search('${definitions.synonyms[i]}')>${definitions.synonyms[i]},</span>`;
+				//passing all 5 synonyms inside synonyms div
 				synonyms.insertAdjacentHTML("beforeend", tag);
 			}
 		}
 	}
 }
+
+// search synonyms function
+function search(word){
+	searchInput.value = word;
+	fetchApi(word);
+}
+
 
 //fetch api function
 function fetchApi(word) {
