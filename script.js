@@ -5,7 +5,7 @@ const wrapper = document.querySelector(".wrapper"),
 	synonyms = wrapper.querySelector(".synonyms .list"),
 	infoText = wrapper.querySelector(".info-text"),
 	volumeIcon = wrapper.querySelector(".word i"),
-	removeIcon = wrapper.querySelector(".word i");
+	removeIcon = wrapper.querySelector(".search span");
 	let audio;
 
 // data function
@@ -45,11 +45,13 @@ function data(result, word) {
 function search(word){
 	searchInput.value = word;
 	fetchApi(word);
+	wrapper.classList.remove("active");
 }
 
 
 //fetch api function
 function fetchApi(word) {
+	wrapper.classList.remove("active");
 	infoText.style.color = "#000";
 	infoText.innerHTML = `Searching the meaning of <span>"${word}"</span>`;
 	let url = `https://api.dictionaryapi.dev/api/v2/entries/en/${word}`;
@@ -66,4 +68,11 @@ searchInput.addEventListener("keydown", (e) => {
 
 volumeIcon.addEventListener("click", ()=>{
 	audio.play();
+});
+
+removeIcon.addEventListener("click", ()=>{
+	searchInput.value = "";
+	searchInput.focus();
+	wrapper.classList.remove("active");
+	infoText.innerHTML = `Type a word and press enter to get meaning, example, pronunciation and synonyms of that typed`;
 });
