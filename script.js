@@ -3,7 +3,9 @@
 const wrapper = document.querySelector(".wrapper"),
 	searchInput = wrapper.querySelector("input"),
 	synonyms = wrapper.querySelector(".synonyms .list"),
-	infoText = wrapper.querySelector(".info-text");
+	infoText = wrapper.querySelector(".info-text"),
+	volumeIcon = wrapper.querySelector(".word i");
+	let audio;
 
 // data function
 function data(result, word) {
@@ -20,6 +22,8 @@ function data(result, word) {
 		document.querySelector(".word span").innerText = phonetics;
 		document.querySelector(".meaning span").innerText = definitions.definition;
 		document.querySelector(".example span").innerText = definitions.example;
+		//creating new audio obj and passing audio src
+		audio = new Audio(result[0].phonetics[0].audio);
 
 		// if there is no synonyms then hide the synonyms div
 		if (definitions.synonyms[0] == undefined) {
@@ -50,4 +54,8 @@ searchInput.addEventListener("keydown", (e) => {
 	if (e.key === "Enter" && e.target.value) {
 		fetchApi(e.target.value);
 	}
+});
+
+volumeIcon.addEventListener("click", ()=>{
+	audio.play();
 });
